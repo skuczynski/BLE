@@ -164,7 +164,9 @@ int ble::print_advertising_devices(int device_handle, uint8_t filter_type)
 		ba2str(&info->bdaddr, mac_addr);
 		eir_get_field(info->data, info->length, name, sizeof(name) - 1, 0x08);//name_short
 
-		printf("---\nMAC: %s \nname: %s\n", mac_addr, name);
+		int8_t RSSI = (int8_t)info->data[info->length];
+
+		printf("---\nMAC: %s \nname: %s\nRSSI: %d\n", mac_addr, name, RSSI);
 	}
 
 	setsockopt(device_handle, SOL_HCI, HCI_FILTER, &of, sizeof(of));
